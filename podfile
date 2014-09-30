@@ -1,0 +1,5 @@
+platform :ios, '7.1'
+
+pod 'Parse'
+pod 'ParseFacebookUtils',:podspec =>'https://raw.githubusercontent.com/rickerbh/ParseFacebookUtilsSpec/master/ParseFacebookUtils.podspec.json'
+pod 'JSMessagesViewController'
