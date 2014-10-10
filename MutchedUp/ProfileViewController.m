@@ -12,8 +12,8 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UILabel *tagLineLabel;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
+@property (strong, nonatomic) IBOutlet UITextView *tagLineLabel;
 @property (strong, nonatomic) IBOutlet UILabel *ageLabel;
 @end
 
@@ -39,11 +39,24 @@
     }];
     
     PFUser *user = self.photo[kCCPhotoUserKey];
-    self.locationLabel.text = user[kCCUserProfileKey][kCCUserProfileLocationKey];
     self.ageLabel.text = [NSString stringWithFormat:@"%@",user[kCCUserProfileKey][kCCPhotoAgeKey]];
-    self.statusLabel.text = user[kCCUserProfileKey][kCCUserProfileRelationshipStatusKey];
+    
+    if (user[kCCUserProfileKey][kCCUserProfileRelationshipStatusKey] == nil) {
+        self.statusLabel.text = @"Single";
+    } else{
+        self.statusLabel.text = user[kCCUserProfileKey][kCCUserProfileRelationshipStatusKey];
+    }
+    
+    if (user[kCCUserProfileKey][kCCUserProfileLocationKey] == nil) {
+        self.locationLabel.text = @"Planet Earth";
+    } else{
+        self.locationLabel.text = user[kCCUserProfileKey][kCCUserProfileLocationKey];
+    }
+    
     self.tagLineLabel.text = user[kCCUserTagLineKey];
     
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+    self.title = user[kCCUserProfileKey][kCCUserProfileFirstNameKey];
     
     
 }
@@ -64,5 +77,20 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark - Actions
+
+- (IBAction)dislikeButtonPressed:(UIButton *)sender
+{
+    [self.delegate didPressLike];
+}
+
+- (IBAction)likeButtonPressed:(UIButton *)sender
+{
+    [self.delegate didPressLike];
+}
+
+
 
 @end

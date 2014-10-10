@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ProfileViewControllerDelegate <NSObject>
+
+@required
+-(void)didPressLike;
+-(void)didPressDislike;
+
+@end
+
 @interface ProfileViewController : UIViewController
 
 @property (nonatomic, strong) PFObject *photo;
+@property (nonatomic, weak) id <ProfileViewControllerDelegate> delegate;
 
 @end

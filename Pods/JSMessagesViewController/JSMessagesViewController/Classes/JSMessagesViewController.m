@@ -87,10 +87,15 @@
                                                                      delegate:self
                                                          panGestureRecognizer:pan];
     
-    if (!allowsPan) {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
-        [_tableView addGestureRecognizer:tap];
-    }
+//    use tap or pan to hide the keyboard
+//    if (!allowsPan) {
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
+//        [_tableView addGestureRecognizer:tap];
+//    }
+    
+    //or useBoth gestures to hide the keyboard
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
+    [_tableView addGestureRecognizer:tap];
     
     if ([self.delegate respondsToSelector:@selector(sendButtonForInputView)]) {
         UIButton *sendButton = [self.delegate sendButtonForInputView];

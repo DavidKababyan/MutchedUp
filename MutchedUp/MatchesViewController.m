@@ -75,9 +75,10 @@
 
 - (void)updateAvilableChatRooms
 {
+    NSLog(@"looking for chats");
     PFQuery *query = [PFQuery queryWithClassName:@"ChatRoom"];
     [query whereKey:@"user1" equalTo:[PFUser currentUser]];
-    
+
     
     //test from udemy
     //Inner Query
@@ -97,7 +98,7 @@
 
     
     PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[query, queryInvert]];
-    [combinedQuery includeKey:@"cht"];
+    [combinedQuery includeKey:@"chat"];
     [combinedQuery includeKey:@"user1"];
     [combinedQuery includeKey:@"user2"];
     [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -105,6 +106,8 @@
             [self.availableChatRooms removeAllObjects];
             self.availableChatRooms = [objects mutableCopy];
             [self.tableView reloadData];
+        } else {
+            NSLog(@"%@",error);
         }
     }];
 }
@@ -133,7 +136,6 @@
     }
     
     cell.textLabel.text = likedUser[@"profile"][@"firstName"];
-    cell.imageView.image = [UIImage imageNamed:@"placeholder.png"];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     PFQuery *queryForPhoto = [PFQuery queryWithClassName:@"Photo"];
@@ -161,11 +163,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"matchesToChatSegue" sender:indexPath];
 }
-
-
-
 
 
 

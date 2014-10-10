@@ -53,6 +53,7 @@
 	_textView = textView;
     
     if (style == JSMessageInputViewStyleClassic) {
+
         _textView.frame = CGRectMake(6.0f, 3.0f, width, height);
         _textView.backgroundColor = [UIColor whiteColor];
         
@@ -70,7 +71,7 @@
     }
     else {
         _textView.frame = CGRectMake(4.0f, 4.5f, width, height);
-        _textView.backgroundColor = [UIColor clearColor];
+        _textView.backgroundColor = [UIColor whiteColor];
         _textView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
         _textView.layer.borderWidth = 0.65f;
         _textView.layer.cornerRadius = 6.0f;

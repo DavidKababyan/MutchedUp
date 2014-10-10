@@ -77,7 +77,7 @@
             NSDictionary *profile = @{@"age": @(age), @"firstName" : self.nameTextField.text, @"gender" : [self.maleFemailSegmentedControl titleForSegmentAtIndex:self.maleFemailSegmentedControl.selectedSegmentIndex], @"name" : self.surnameTextField.text};
             [newUser setObject:profile forKey:@"profile"];
             [newUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                UIImage *profileImage = [UIImage imageNamed:@"pick.jpg"];
+                UIImage *profileImage = [UIImage imageNamed:@"placeholder.png"];
                 
                 NSData *imageData = UIImageJPEGRepresentation(profileImage, 0.8);
             
@@ -89,8 +89,13 @@
                         [photo setObject:photoFile forKey:kCCPhotoPictureKey];
                         [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             NSLog(@"photo saved successfully");
-                            [self.delegate didRegister];
+                            self.usernameTextField.text = nil;
+                            self.passwordTextField.text = nil;
+                            self.nameTextField.text = nil;
+                            self.surnameTextField.text = nil;
+                            self.ageTextField.text = nil;
                             [self.activityIndicator stopAnimating];
+                            [self.delegate didRegister];
                         }];
                         
                     }

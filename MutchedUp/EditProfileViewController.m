@@ -8,7 +8,7 @@
 
 #import "EditProfileViewController.h"
 
-@interface EditProfileViewController ()
+@interface EditProfileViewController () <UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *tagLineTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
@@ -34,6 +34,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.tagLineTextView.delegate = self;
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
     
     PFQuery *query = [PFQuery queryWithClassName:kCCPhotoClassKey];
     [query whereKey:kCCPhotoUserKey equalTo:[PFUser currentUser]];
@@ -78,9 +81,22 @@
     [[PFUser currentUser] setObject:self.tagLineTextView.text forKey:kCCUserTagLineKey];
     [[PFUser currentUser] saveInBackground];
     [self.navigationController popViewControllerAnimated:YES];
-    
-    
 }
 
+#pragma mark - TextViewDelegate
+
+//save by cliking enter on keyboard
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+//{
+//    if ([text isEqualToString:@"\n"]) {
+//        [self.tagLineTextView resignFirstResponder];
+//        [[PFUser currentUser] setObject:self.tagLineTextView.text forKey:kCCUserTagLineKey];
+//        [[PFUser currentUser] saveInBackground];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        return NO;
+//    }else{
+//        return YES;
+//    }
+//}
 
 @end

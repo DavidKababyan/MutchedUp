@@ -20,13 +20,14 @@
  */
 typedef NS_ENUM(NSUInteger, JSMessageInputViewStyle) {
     /**
-     *  An input view style that has the appearance as seen in iOS 6 and before.
-     */
-    JSMessageInputViewStyleClassic,
-    /**
      *  An input view style that has the appearance as seen in iOS 7 and later.
      */
-    JSMessageInputViewStyleFlat
+    JSMessageInputViewStyleFlat,
+    /**
+     *  An input view style that has the appearance as seen in iOS 6 and before.
+     */
+    JSMessageInputViewStyleClassic
+
 };
 
 

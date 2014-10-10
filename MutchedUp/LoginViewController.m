@@ -40,7 +40,7 @@
 {
     [super viewWillAppear:animated];
     self.activityIndicator.hidden = YES;
-    if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+    if ([PFUser currentUser]) {
         [self updateUserInformation];
         [self performSegueWithIdentifier:@"loginToHomeSegue" sender:self];
     }
@@ -64,6 +64,12 @@
 }
 
 #pragma mark - Action buttons
+
+- (IBAction)hideKeyBoard:(id)sender
+{
+    [self.view endEditing:NO];
+}
+
 
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
@@ -105,6 +111,9 @@
     
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
         if (!error) {
+            self.usernameTextField.text = nil;
+            self.passwordTextField.text = nil;
+            [self.view endEditing:YES];
             [self performSegueWithIdentifier:@"loginToHomeSegue" sender:self];
         } else {
             NSLog(@"login error %@", error);
@@ -160,9 +169,10 @@
                 
                 NSTimeInterval seconds = [now timeIntervalSinceDate:birthDate];
                 int age = seconds / 31536000;
-                userProfile[kCCUserProfileBirthdayKey] = @"birthday";
+                userProfile[kCCUserProfileBirthdayKey] = userDictionary[@"birthday"];
 
                 userProfile[kCCPhotoAgeKey] = @(age);
+                NSLog(@"%i",age);
             }
             if (userDictionary[@"interested_in"]){
                 userProfile[kCCUserProfileInterestedInKey] = userDictionary[@"interested_in"];
